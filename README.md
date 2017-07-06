@@ -3,8 +3,8 @@
 Motivations - is to create systemjs HMR for your aurelia application.
 
 The aurelia loaders used as donors: 
-- (Aurelia default loader)[https://github.com/aurelia/loader-default/blob/master/src/index.js] - contains some code samples, how work with SystemJS low lvl.
-- (Aurelia webpack loader)[https://github.com/aurelia/loader-webpack/blob/master/src/aurelia-loader-webpack.ts] - have code samples, how the integrate (aurelia/hot-module-reload)[https://github.com/aurelia/hot-module-reload] to the loader.
+-  aurelia (default loader)[https://github.com/aurelia/loader-default/blob/master/src/index.js] - contains some code samples, how work with SystemJS low lvl.
+-  aurelia (webpack loader)[https://github.com/aurelia/loader-webpack/blob/master/src/aurelia-loader-webpack.ts] - have code samples, how the integrate (aurelia/hot-module-reload)[https://github.com/aurelia/hot-module-reload] to the loader.
 
 The project based on:
 - https://github.com/alexisvincent/systemjs-hot-reloader - manage file changes on the UI over System.js
