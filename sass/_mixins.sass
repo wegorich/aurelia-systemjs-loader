@@ -1,0 +1,18 @@
+$vh-base: 1080px
+@function strip-unit($num)
+  @return $num / ($num * 0 + 1)
+
+@function convert-to-vh($value, $base-value)
+  @return strip-unit($value)/strip-unit($base-value) * 100 * 1vh
+
+@function vh-calc($values, $base-value: $vh-base)
+  //$max: length($values)
+  //
+  //@if $max == 1
+  //  @return convert-to-vh(nth($values, 1), $base-value)
+  //
+  //$remValues: ()
+  //@for $i from 1 through $max
+  //  $remValues: append($remValues, convert-to-vh(nth($values, $i), $base-value))
+
+  @return $values

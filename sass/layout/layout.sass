@@ -1,0 +1,83 @@
+\:focus
+    outline: none
+*
+    box-sizing: border-box
+
+body
+    font-size: 14px
+    color: #444
+
+.layout .main
+    overflow: auto
+
+.layout 
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 100vh
+
+.main
+    background: white
+    border-radius: 4px
+    padding: 20px
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3)
+    max-width: 600px
+
+.form-group
+    display: block
+    + .form-group
+        margin-top: 24px
+
+small
+    font-size: 12px
+
+.animated
+    animation-duration: .6s
+
+.link
+    cursor: pointer
+    position: relative
+
+.btn
+    font-size: 14px
+    letter-spacing: .5px
+    font-family: 'Lato', sans-serif
+    font-weight: 900
+    width: inherit
+    border: none
+    position: relative
+
+.btn-primary
+    background: #DDD
+    transition: background .3s ease-in-out
+    &:hover, &:focus
+        background: darken(#f0f0f0, 10)
+    &:active
+        background: darken(#f7f7f7, 20)
+.btn-info
+    background: #4caf50
+    transition: background .3s ease-in-out
+    &:hover, &:focus
+        background: darken(#4caf50, 10)
+    &:active
+        background: darken(#4caf50, 20)
+.btn-lg
+    font-size: 15px;
+
+.form-control, .btn
+    border: 1px solid #dfdfdf
+    font-size: 1rem
+    color: #444
+    transition: all .2s ease-in-out
+    display: inline-block
+    border-radius: 3px
+    height: 3rem
+    padding: 0 .85rem
+    width: 100%
+
+.text-danger
+    color: red
+
+.pr-page
+    margin-bottom: 24px
+    

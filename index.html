@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TEST</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <!-- build:css styles/style.css-->
+    <link rel="stylesheet" type="text/css" href="dist/css/app.css">
+    <!-- endbuild -->
+
+    <style type="text/css">
+        /* optimize first rendering */
+        html, body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            color: #53585f;
+            background-color: #ecf1f3;
+            margin: 0;
+            padding: 0;
+        }
+        .page-loading {
+            margin-top: 40vh;
+            box-sizing: border-box;
+            font-size: 24px;
+            color: #777;
+            line-height: 24px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-align: center;
+        }
+    </style>
+
+
+<body aurelia-app="main">
+<span id="browser-sync-binding"></span>
+
+<div class="page-loading">
+    <i class="fa fa-gear fa-spin"></i> Loading...
+</div>
+
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+
+<script>
+    System.import('./dist/lib/aurelia-systemjs-loader')
+    System.import('systemjs-hot-reloader').then((connect) => {
+        connect()
+        System.import('aurelia-bootstrapper')
+    })
+</script>
+
+</body>
+</html>

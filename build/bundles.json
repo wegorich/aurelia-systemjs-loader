@@ -1,0 +1,40 @@
+{
+    "bundles": {
+        "dist/aurelia-bundle": {
+            "includes": [
+                "**/*.html!text",
+                "*/**/*.json!text",
+                "[*.js]",
+                "[*/**/*.js]",
+                "async",
+                "aurelia-bootstrapper",
+                "aurelia-framework",
+                "aurelia-history-browser",
+                "aurelia-http-client",
+                "aurelia-i18n",
+                "aurelia-loader-default",
+                "aurelia-logging-console",
+                "aurelia-polyfills",
+                "aurelia-router",
+                "aurelia-templating-binding",
+                "aurelia-templating-resources",
+                "aurelia-templating-router",
+                "aurelia-validation",
+                "css",
+                "i18next-xhr-backend",
+                "path",
+                "text",
+                "json",
+                "twix",
+                "intl",
+                "lodash",
+                "promise.prototype.finally"
+            ],
+            "options": {
+                "inject": true,
+                "minify": true,
+                "rev": true
+            }
+        }
+    }
+}

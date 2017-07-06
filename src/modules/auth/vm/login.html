@@ -1,0 +1,19 @@
+<template>
+    <form submit.trigger="login()">
+        <div class="form-group" if.bind="error">
+            <span class="text-danger">Some error</span>
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" placeholder="email" required value.bind="params.email">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="password" required value.bind="params.password">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">
+                <span>Sign In</span>
+                <link class="rippleJS" />
+            </button>
+        </div>
+    </form>
+</template>
