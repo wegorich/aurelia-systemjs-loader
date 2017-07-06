@@ -69,7 +69,7 @@ export class SystemJSLoader extends Loader {
         let that = this;
 
         this.addPlugin('template-registry-entry', {
-            fetch: async(address) => {
+            fetch: async(address, _loader) => {
                 // let entry = that.getOrCreateTemplateRegistryEntry(address);
                 // return entry.templateIsLoaded ? entry : that.templateLoader.loadTemplate(that, entry).then(x => entry);
                 // HMR:
@@ -95,12 +95,17 @@ export class SystemJSLoader extends Loader {
                 return entry;
             }
         });
+
+
+        // TODO: add event emitter hook here to watch module updates.
+        // Not clear what to call
+        // loadModule
+        // loadTemplate
     }
 
 
     async _import(address, defaultHMR = true) {
         if (SystemJS.has(address)) {
-            console.log('reload', address)
             if (defaultHMR && module.hot && this.hmrContext) {
                 this.hmrContext.handleModuleChange(moduleId);
             }
@@ -236,29 +241,31 @@ export class SystemJSLoader extends Loader {
 }
 
 PLATFORM.Loader = SystemJSLoader;
-PLATFORM.eachModule = function(callback) {
-    if (System.registry) { // SystemJS >= 0.20.x
-        for (let [k, m] of System.registry.entries()) {
-            try {
-                if (callback(k, m)) return;
-            } catch (e) {}
-        }
-        return;
-    }
+// this code never runs
+// PLATFORM.eachModule = function(callback) {
+//     if (System.registry) { // SystemJS >= 0.20.x
+//         for (let [k, m] of System.registry.entries()) {
+//             try {
+//                 if (callback(k, m)) return;
+//             } catch (e) {}
+//         }
+//         return;
+//     }
 
-    // SystemJS < 0.20.x
-    let modules = System._loader.modules;
+//     // SystemJS < 0.20.x
+//     let modules = System._loader.modules;
 
-    for (let key in modules) {
-        try {
-            if (callback(key, modules[key].module)) return;
-        } catch (e) {}
-    }
-};
+//     for (let key in modules) {
+//         try {
+//             console.log(key, modules[key].module)
+//             if (callback(key, modules[key].module)) return;
+//         } catch (e) {}
+//     }
+// };
 
 System.set('text', System.newModule({
     'translate': function(load) {
-        return 'module.exports = "' + load.source
+        var exports = 'module.exports = "' + load.source
             .replace(/(["\\])/g, '\\$1')
             .replace(/[\f]/g, '\\f')
             .replace(/[\b]/g, '\\b')
@@ -268,5 +275,6 @@ System.set('text', System.newModule({
             .replace(/[\u2028]/g, '\\u2028')
             .replace(/[\u2029]/g, '\\u2029') +
             '";';
+        return exports;
     }
 }));

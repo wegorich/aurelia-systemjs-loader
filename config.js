@@ -8,6 +8,8 @@ System.config({
   },
 
   meta: {
+    // TODO there should be *, when aurelia-hmr-update become a package
+    'modules/*': { loader: 'aurelia-hmr-update' },
     "_services/module-connector.js": {
       "deps": [
         "test/auth",
@@ -18,6 +20,7 @@ System.config({
 
   map: {
     "@hot": "@empty",
+    "aurelia-hmr-update": "lib/aurelia-hmr-update.js",
     "aurelia-binding": "npm:aurelia-binding@1.2.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.1",
     "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.1",
@@ -44,6 +47,7 @@ System.config({
     "aurelia-validation": "npm:aurelia-validation@0.13.1",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.35",
+    "jquery": "npm:jquery@3.2.1",
     "json": "github:systemjs/plugin-json@0.1.2",
     "promise.prototype.finally": "npm:promise.prototype.finally@2.0.1",
     "systemjs-hot-reloader": "npm:systemjs-hot-reloader@1.1.0",

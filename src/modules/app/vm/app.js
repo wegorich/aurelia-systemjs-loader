@@ -1,8 +1,5 @@
 import { inject, Aurelia } from 'aurelia-framework';
 import { api } from 'test/services';
-import { module } from '@hot';
-
-console.log('module', module);
 
 export class App {
     constructor() {

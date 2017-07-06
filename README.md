@@ -57,11 +57,9 @@ gulp watch
 
 #### Current state: 
 
-0. It's not apply reloaded module to the Aurelia app yet.
+0. It's not apply reloaded module to the Aurelia app yet. Found that we need extra system.js module, to process changes. Take a look at **/lib/aurelia-hmr-update**. Case that file said that our module changes, and provide module name as notification. Then **aurelia-systemjs-loader** can trigger **__import** to update aurelia deps.
 
-1. Not clear how to trigger the **__import** method after module synchronized via sockets.js
-
-2. module.hot - seems to be never true, but in that discussion: [React Hot Loader](https://github.com/alexisvincent/systemjs-hot-reloader/issues/140) seems be some times.
+2. **module.hot** - seems to be never true, but in that discussion: [React Hot Loader](https://github.com/alexisvincent/systemjs-hot-reloader/issues/140) seems be some times. UPs: it's globar webpack flag. 
 
 3. Open questions here:
   - [How to do custom loader?](https://github.com/alexisvincent/systemjs-hot-reloader/issues/143)
