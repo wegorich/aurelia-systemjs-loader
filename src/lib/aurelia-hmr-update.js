@@ -10,13 +10,11 @@ const isWorker = typeof WorkerGlobalScope !== 'undefined'
 
 function changeAureliaFiles(url) {
     // TODO: add some event emitter to say new module there
-    console.log('module loads', url);
     // TODO: find way to check uploaded views via SystemJS
     if (url && (SystemJS.loads[SystemJS.baseURL + url] || SystemJS.loads[SystemJS.baseURL + url + '!http://localhost:9000/jspm_packages/github/systemjs/plugin-text@0.0.3.js'])) {
         var moduleId = url.replace('dist/', '')
         if (moduleId.endsWith('.html')) {
-            window.__reloaded = true;
-            window.__systemJSLoader.hmrContext.handleViewChange(moduleId, true);
+             window.__systemJSLoader.hmrContext.handleViewChange(moduleId, true);
         } else{
              window.__systemJSLoader.hmrContext.handleModuleChange(moduleId.replace('.js', ''), true);
         }       
@@ -44,7 +42,6 @@ export default (opts = {}) => {
     d('reloading', url)
     if (url.startsWith('src/')) return;
     // needs to fix url for templates I suppose
-    // if (url && (SystemJS.loads[SystemJS.baseURL + url] || SystemJS.loads[SystemJS.baseURL + url + '!http://localhost:9000/jspm_packages/github/systemjs/plugin-text@0.0.3.js'])) {
     var baseUrl = SystemJS.baseURL + url;
     if (SystemJS.loads[SystemJS.baseURL + url + '!http://localhost:9000/jspm_packages/github/systemjs/plugin-text@0.0.3.js']) {
         var baseUrl = SystemJS.baseURL + url + '!http://localhost:9000/jspm_packages/github/systemjs/plugin-text@0.0.3.js';

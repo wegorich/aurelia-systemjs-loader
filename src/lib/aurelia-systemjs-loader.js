@@ -2,7 +2,6 @@
 import { Origin } from 'aurelia-metadata';
 import { Loader, TemplateRegistryEntry, LoaderPlugin } from 'aurelia-loader';
 import { DOM, PLATFORM } from 'aurelia-pal';
-const { HmrContext } = require('aurelia-hot-module-reload');
 /**
  * An implementation of the TemplateLoader interface implemented with text-based loading.
  */
@@ -74,7 +73,8 @@ export class SystemJSLoader extends Loader {
         this.addPlugin('template-registry-entry', {
             fetch: async(address, _loader) => {
                 if (!this.hmrContext) {
-                   this.hmrContext = new HmrContext(this);
+                    const { HmrContext } = require('aurelia-hot-module-reload');
+                    this.hmrContext = new HmrContext(this);
                 }
 
                 const entry = this.getOrCreateTemplateRegistryEntry(address);
@@ -90,6 +90,27 @@ export class SystemJSLoader extends Loader {
         // Not clear what to call
         // loadModule
         // loadTemplate
+
+        PLATFORM.eachModule = function(callback) {
+            if (System.registry) { // SystemJS >= 0.20.x
+            for (let [k, m] of System.registry.entries()) {
+                try {
+                if (callback(k, m)) return;
+                } catch (e) {}
+            }
+            return;
+            }
+
+            // SystemJS < 0.20.x
+            let modules = System._loader.modules;
+
+            for (let key in modules) {
+            try {
+                if (callback(key, modules[key].module)) return;
+            } catch (e) {}
+            }
+        };
+
     }
 
     async _import(address, defaultHMR = true) {
@@ -97,7 +118,7 @@ export class SystemJSLoader extends Loader {
         const moduleId = addressParts[0];
         const loaderPlugin = addressParts.length > 1 ? addressParts[1] : null;
 
-        if (loaderPlugin && loaderPlugin != 'text') {
+        if (loaderPlugin) {
             const plugin = this.loaderPlugins[loaderPlugin];
             if (!plugin) {
                 throw new Error(`Plugin ${loaderPlugin} is not registered in the loader.`);
@@ -107,7 +128,8 @@ export class SystemJSLoader extends Loader {
             }
             return await plugin.fetch(moduleId);
         }
-        return SystemJS.import(address);
+
+        return SystemJS.import(moduleId.endsWith('.html') ? address + '!text' : moduleId);
     }
 
     /**
@@ -184,14 +206,13 @@ export class SystemJSLoader extends Loader {
      * @param url The url of the text file to load.
      * @return A Promise for text content.
      */
-    loadText(url) {
-        return this.loadModule(this.applyPluginToUrl(url, this.textPluginName)).then(textOrModule => {
-            if (typeof textOrModule === 'string') {
-                return textOrModule;
-            }
-
-            return textOrModule['default'];
-        });
+    async loadText(url) {
+        const result = await this.loadModule(url, false);
+        if (result instanceof Array && result[0] instanceof Array && result.hasOwnProperty('toString')) {
+        // we're dealing with a file loaded using the css-loader:
+            return result.toString();
+        }
+        return result;
     }
 
     /**
