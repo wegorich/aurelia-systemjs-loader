@@ -57,11 +57,17 @@ gulp watch
 
 #### Current state: 
 
-0. It's not apply reloaded module to the Aurelia app yet. Found that we need extra system.js module, to process changes. Take a look at **/lib/aurelia-hmr-update**. Case that file said that our module changes, and provide module name as notification. Then **aurelia-systemjs-loader** can trigger **__import** to update aurelia deps.
+- [X] Live reload css done by [browser-sync stream](https://www.browsersync.io/docs/api#api-stream), and [sass-glob](https://www.npmjs.com/package/gulp-sass-glob)
 
-2. **module.hot** - seems to be never true, but in that discussion: [React Hot Loader](https://github.com/alexisvincent/systemjs-hot-reloader/issues/140) seems be some times. UPs: it's globar webpack flag. 
+- [X] It's not apply reloaded module to the Aurelia app yet. Found that we need extra system.js module, to process changes. Take a look at **/lib/aurelia-hmr-update**. Case that file said that our module changes, and provide module name as notification. Then **aurelia-systemjs-loader** can trigger **__import** to update aurelia deps.
 
-3. Open questions here:
+- [X] **module.hot** - seems to be never true, but in that discussion: [React Hot Loader](https://github.com/alexisvincent/systemjs-hot-reloader/issues/140) seems be some times. UPs: it's globar webpack flag. 
+
+- [X] How to reload the template? Found that **systemjs-hot-reloader**, disallow you patch the html after reloads via default systemjs loaders. But it works over the **socket.io-client**. So I decide to patch **systemjs-hot-reloader** itself to provide me a hook for subscribing directly to the sockets message bus.
+
+- [] Find the way to reload the Aurelia templates
+
+Open questions here:
   - [How to do custom loader?](https://github.com/alexisvincent/systemjs-hot-reloader/issues/143)
   - [HMR for SystemJS](https://github.com/aurelia/hot-module-reload/issues/10)
 

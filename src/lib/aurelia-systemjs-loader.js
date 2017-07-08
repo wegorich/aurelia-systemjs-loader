@@ -1,7 +1,8 @@
 /*eslint dot-notation:0*/
 import { Origin } from 'aurelia-metadata';
-import { TemplateRegistryEntry, Loader } from 'aurelia-loader';
+import { Loader, TemplateRegistryEntry, LoaderPlugin } from 'aurelia-loader';
 import { DOM, PLATFORM } from 'aurelia-pal';
+const { HmrContext } = require('aurelia-hot-module-reload');
 /**
  * An implementation of the TemplateLoader interface implemented with text-based loading.
  */
@@ -68,24 +69,12 @@ export class SystemJSLoader extends Loader {
 
         let that = this;
 
+        window.__systemJSLoader = this;
+
         this.addPlugin('template-registry-entry', {
             fetch: async(address, _loader) => {
-                // let entry = that.getOrCreateTemplateRegistryEntry(address);
-                // return entry.templateIsLoaded ? entry : that.templateLoader.loadTemplate(that, entry).then(x => entry);
-                // HMR:
-                console.log('module.hot')
-                if(module.hot) {
-                    if (!this.hmrContext) {
-                        // Note: Please do NOT import aurelia-hot-module-reload statically at the top of file.
-                        //       We don't want to bundle it when not using --hot, in particular in production builds.
-                        //       Webpack will evaluate the `if (module.hot)` above at build time 
-                        //       and will include (or not) aurelia-hot-module-reload accordingly.
-                        const { HmrContext } = require('aurelia-hot-module-reload');
-                        this.hmrContext = new HmrContext(this);
-                    }
-                    module.hot.accept(address, async() => {
-                        await this.hmrContext.handleViewChange(address);
-                    });
+                if (!this.hmrContext) {
+                   this.hmrContext = new HmrContext(this);
                 }
 
                 const entry = this.getOrCreateTemplateRegistryEntry(address);
@@ -103,16 +92,22 @@ export class SystemJSLoader extends Loader {
         // loadTemplate
     }
 
-
     async _import(address, defaultHMR = true) {
-        if (SystemJS.has(address)) {
-            if (defaultHMR && module.hot && this.hmrContext) {
-                this.hmrContext.handleModuleChange(moduleId);
+        const addressParts = address.split('!');
+        const moduleId = addressParts[0];
+        const loaderPlugin = addressParts.length > 1 ? addressParts[1] : null;
+
+        if (loaderPlugin && loaderPlugin != 'text') {
+            const plugin = this.loaderPlugins[loaderPlugin];
+            if (!plugin) {
+                throw new Error(`Plugin ${loaderPlugin} is not registered in the loader.`);
             }
-            return SystemJS.reload(address);
-        } else {
-            return SystemJS.import(address);
+            if (plugin.hot) {
+                plugin.hot(moduleId);
+            }
+            return await plugin.fetch(moduleId);
         }
+        return SystemJS.import(address);
     }
 
     /**
@@ -121,7 +116,6 @@ export class SystemJSLoader extends Loader {
      * @param source The source to map the module to.
      */
     map(id, source) {}
-
 
     /**
      * Normalizes a module id.
@@ -167,7 +161,7 @@ export class SystemJSLoader extends Loader {
      * @param moduleId The module ID to load.
      * @return A Promise for the loaded module.
      */
-    async loadModule(moduleId, defaultHMR = true) {
+    async loadModule(moduleId, defaultHMR = true, forse) {
         let existing = this.moduleRegistry[moduleId];
         if (existing) {
             return Promise.resolve(existing);
@@ -191,7 +185,7 @@ export class SystemJSLoader extends Loader {
      * @return A Promise for text content.
      */
     loadText(url) {
-        return this._import(this.applyPluginToUrl(url, this.textPluginName)).then(textOrModule => {
+        return this.loadModule(this.applyPluginToUrl(url, this.textPluginName)).then(textOrModule => {
             if (typeof textOrModule === 'string') {
                 return textOrModule;
             }
@@ -225,43 +219,11 @@ export class SystemJSLoader extends Loader {
      * @param implementation The plugin implementation.
      */
     addPlugin(pluginName, implementation) {
-        System.set(pluginName, System.newModule({
-            'fetch': function(load, _fetch) {
-                let result = implementation.fetch(load.address);
-                return Promise.resolve(result).then(x => {
-                    load.metadata.result = x;
-                    return '';
-                });
-            },
-            'instantiate': function(load) {
-                return load.metadata.result;
-            }
-        }));
+        this.loaderPlugins[pluginName] = implementation;
     };
 }
 
 PLATFORM.Loader = SystemJSLoader;
-// this code never runs
-// PLATFORM.eachModule = function(callback) {
-//     if (System.registry) { // SystemJS >= 0.20.x
-//         for (let [k, m] of System.registry.entries()) {
-//             try {
-//                 if (callback(k, m)) return;
-//             } catch (e) {}
-//         }
-//         return;
-//     }
-
-//     // SystemJS < 0.20.x
-//     let modules = System._loader.modules;
-
-//     for (let key in modules) {
-//         try {
-//             console.log(key, modules[key].module)
-//             if (callback(key, modules[key].module)) return;
-//         } catch (e) {}
-//     }
-// };
 
 System.set('text', System.newModule({
     'translate': function(load) {

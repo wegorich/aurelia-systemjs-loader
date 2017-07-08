@@ -6,10 +6,11 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+  hotReloaderOptions: {
+    "logLevel": 3
+  },
 
   meta: {
-    // TODO there should be *, when aurelia-hmr-update become a package
-    'modules/*': { loader: 'aurelia-hmr-update' },
     "_services/module-connector.js": {
       "deps": [
         "test/auth",
@@ -20,7 +21,6 @@ System.config({
 
   map: {
     "@hot": "@empty",
-    "aurelia-hmr-update": "lib/aurelia-hmr-update.js",
     "aurelia-binding": "npm:aurelia-binding@1.2.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.1",
     "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.1",
@@ -28,6 +28,7 @@ System.config({
     "aurelia-framework": "npm:aurelia-framework@1.1.2",
     "aurelia-history": "npm:aurelia-history@1.0.0",
     "aurelia-history-browser": "npm:aurelia-history-browser@1.0.0",
+    "aurelia-hmr-update": "lib/aurelia-hmr-update.js",
     "aurelia-hot-module-reload": "npm:aurelia-hot-module-reload@0.1.0",
     "aurelia-http-client": "npm:aurelia-http-client@1.1.1",
     "aurelia-i18n": "npm:aurelia-i18n@1.6.0",
@@ -47,9 +48,13 @@ System.config({
     "aurelia-validation": "npm:aurelia-validation@0.13.1",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.35",
+    "debug": "npm:debug@2.6.8",
+    "deepmerge": "npm:deepmerge@1.5.0",
     "jquery": "npm:jquery@3.2.1",
     "json": "github:systemjs/plugin-json@0.1.2",
     "promise.prototype.finally": "npm:promise.prototype.finally@2.0.1",
+    "socket.io-client": "npm:socket.io-client@2.0.3",
+    "systemjs-hmr": "npm:systemjs-hmr@2.0.9",
     "systemjs-hot-reloader": "npm:systemjs-hot-reloader@1.1.0",
     "test/app": "modules/app/index.js",
     "test/auth": "modules/auth/index.js",
@@ -226,6 +231,12 @@ System.config({
       "aurelia-task-queue": "npm:aurelia-task-queue@1.2.0",
       "aurelia-templating": "npm:aurelia-templating@1.4.2"
     },
+    "npm:better-assert@1.0.2": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0",
+      "callsite": "npm:callsite@1.0.0",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:buffer@5.0.6": {
       "base64-js": "npm:base64-js@1.2.1",
       "ieee754": "npm:ieee754@1.1.8"
@@ -236,9 +247,34 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
+    "npm:debug@2.6.8": {
+      "ms": "npm:ms@2.0.0"
+    },
     "npm:define-properties@1.1.2": {
       "foreach": "npm:foreach@2.0.5",
       "object-keys": "npm:object-keys@1.0.11"
+    },
+    "npm:engine.io-client@3.1.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "component-emitter": "npm:component-emitter@1.2.1",
+      "component-inherit": "npm:component-inherit@0.0.3",
+      "debug": "npm:debug@2.6.8",
+      "engine.io-parser": "npm:engine.io-parser@2.1.1",
+      "has-cors": "npm:has-cors@1.1.0",
+      "indexof": "npm:indexof@0.0.1",
+      "parsejson": "npm:parsejson@0.0.3",
+      "parseqs": "npm:parseqs@0.0.5",
+      "parseuri": "npm:parseuri@0.0.5",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "yeast": "npm:yeast@0.1.2"
+    },
+    "npm:engine.io-parser@2.1.1": {
+      "after": "npm:after@0.8.2",
+      "arraybuffer.slice": "npm:arraybuffer.slice@0.0.6",
+      "base64-arraybuffer": "npm:base64-arraybuffer@0.1.5",
+      "blob": "npm:blob@0.0.4",
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "has-binary2": "npm:has-binary2@1.0.2"
     },
     "npm:es-abstract@1.7.0": {
       "es-to-primitive": "npm:es-to-primitive@1.1.1",
@@ -251,6 +287,10 @@ System.config({
       "is-date-object": "npm:is-date-object@1.0.1",
       "is-symbol": "npm:is-symbol@1.0.1"
     },
+    "npm:has-binary2@1.0.2": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "isarray": "npm:isarray@2.0.1"
+    },
     "npm:i18next@3.5.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -259,6 +299,15 @@ System.config({
     },
     "npm:intl@1.2.5": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:parsejson@0.0.3": {
+      "better-assert": "npm:better-assert@1.0.2"
+    },
+    "npm:parseqs@0.0.5": {
+      "better-assert": "npm:better-assert@1.0.2"
+    },
+    "npm:parseuri@0.0.5": {
+      "better-assert": "npm:better-assert@1.0.2"
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
@@ -272,6 +321,29 @@ System.config({
       "define-properties": "npm:define-properties@1.1.2",
       "es-abstract": "npm:es-abstract@1.7.0",
       "function-bind": "npm:function-bind@1.1.0"
+    },
+    "npm:socket.io-client@2.0.3": {
+      "backo2": "npm:backo2@1.0.2",
+      "base64-arraybuffer": "npm:base64-arraybuffer@0.1.5",
+      "component-bind": "npm:component-bind@1.0.0",
+      "component-emitter": "npm:component-emitter@1.2.1",
+      "debug": "npm:debug@2.6.8",
+      "engine.io-client": "npm:engine.io-client@3.1.1",
+      "has-cors": "npm:has-cors@1.1.0",
+      "indexof": "npm:indexof@0.0.1",
+      "object-component": "npm:object-component@0.0.3",
+      "parseqs": "npm:parseqs@0.0.5",
+      "parseuri": "npm:parseuri@0.0.5",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "socket.io-parser": "npm:socket.io-parser@3.1.2",
+      "to-array": "npm:to-array@0.1.4"
+    },
+    "npm:socket.io-parser@3.1.2": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "component-emitter": "npm:component-emitter@1.2.1",
+      "debug": "npm:debug@2.6.8",
+      "has-binary2": "npm:has-binary2@1.0.2",
+      "isarray": "npm:isarray@2.0.1"
     },
     "npm:systemjs-hot-reloader@1.1.0": {
       "systemjs-hmr": "npm:systemjs-hmr@2.0.9"
