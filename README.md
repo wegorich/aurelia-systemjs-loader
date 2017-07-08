@@ -65,7 +65,11 @@ gulp watch
 
 - [X] How to reload the template? Found that **systemjs-hot-reloader**, disallow you patch the html after reloads via default systemjs loaders. But it works over the **socket.io-client**. So I decide to patch **systemjs-hot-reloader** itself to provide me a hook for subscribing directly to the sockets message bus.
 
-- [] Find the way to reload the Aurelia templates
+- [X] Find the way to reload the Aurelia templates
+
+- [] Fork **aurelia-loader-webpack** and push changes, for community reviev
+
+- [] Fork **systemjs-hot-reloader** and push changes for PR, we need for the change callback
 
 Open questions here:
   - [How to do custom loader?](https://github.com/alexisvincent/systemjs-hot-reloader/issues/143)
