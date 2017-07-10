@@ -38,7 +38,7 @@ The HMR works with JSPM, systemjs and aurelia.js
 ![alt text](./assets/images/demo.gif)
 
 **ITWORKS**
-![itworks](https://i.giphy.com/media/bBIDLViKMHbRm/giphy.webp)
+![itworks](./assets/images/dance.webp)
 
 
 Open questions here:
