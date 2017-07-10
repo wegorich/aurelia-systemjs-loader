@@ -37,11 +37,12 @@ The HMR works with JSPM, systemjs and aurelia.js
 
 ![alt text](./assets/images/demo.gif)
 
-**ITWORKS**
-![itworks](./assets/images/dance.webp)
-
-
 Open questions here:
   - [How to do custom loader?](https://github.com/alexisvincent/systemjs-hot-reloader/issues/143)
   - [HMR for SystemJS](https://github.com/aurelia/hot-module-reload/issues/10)
 
+-----
+
+#### ITWORKS
+
+![itworks](./assets/images/dance.webp)
