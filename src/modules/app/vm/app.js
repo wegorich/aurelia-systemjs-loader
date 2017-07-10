@@ -14,8 +14,8 @@ export class App {
     }
 
     click() {
-        this.jsText = "Some text 2";
-        console.log('test12');
+        this.jsText = "Some text 199992";
+        console.log('10000000');
     }
 
     updateUser(user) {

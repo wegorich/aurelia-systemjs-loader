@@ -42,11 +42,14 @@
 <script src="config.js"></script>
 
 <script>
-    SystemJS.trace = true;
-    System.import('jquery')
-    System.import('./dist/lib/aurelia-systemjs-loader')
-    System.import('./dist/lib/aurelia-hmr-update').then((connect) => {
-        connect.default()
+    System.import('aurelia-loader-systemjs')
+    Promise.all([
+        System.import('aurelia-systemjs-hot-plugin'),
+        System.import('systemjs-hot-reloader-example')
+    ]).then(([fileChanged, connect]) => {
+        connect({
+            fileChanged
+        })
         System.import('aurelia-bootstrapper')
     })
 </script>

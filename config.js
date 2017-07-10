@@ -33,6 +33,7 @@ System.config({
     "aurelia-http-client": "npm:aurelia-http-client@1.1.1",
     "aurelia-i18n": "npm:aurelia-i18n@1.6.0",
     "aurelia-loader": "npm:aurelia-loader@1.0.0",
+    "aurelia-loader-systemjs": "npm:aurelia-loader-systemjs@1.0.4",
     "aurelia-logging": "npm:aurelia-logging@1.3.1",
     "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0",
     "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
@@ -40,6 +41,7 @@ System.config({
     "aurelia-path": "npm:aurelia-path@1.1.1",
     "aurelia-route-recognizer": "npm:aurelia-route-recognizer@1.1.0",
     "aurelia-router": "npm:aurelia-router@1.3.0",
+    "aurelia-systemjs-hot-plugin": "npm:aurelia-systemjs-hot-plugin@1.0.1",
     "aurelia-task-queue": "npm:aurelia-task-queue@1.2.0",
     "aurelia-templating": "npm:aurelia-templating@1.4.2",
     "aurelia-templating-binding": "npm:aurelia-templating-binding@1.3.0",
@@ -56,6 +58,7 @@ System.config({
     "socket.io-client": "npm:socket.io-client@2.0.3",
     "systemjs-hmr": "npm:systemjs-hmr@2.0.9",
     "systemjs-hot-reloader": "npm:systemjs-hot-reloader@1.1.0",
+    "systemjs-hot-reloader-example": "npm:systemjs-hot-reloader-example@1.1.3",
     "test/app": "modules/app/index.js",
     "test/auth": "modules/auth/index.js",
     "test/services": "_services/index.js",
@@ -157,6 +160,12 @@ System.config({
       "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
       "aurelia-pal": "npm:aurelia-pal@1.3.0"
     },
+    "npm:aurelia-loader-systemjs@1.0.4": {
+      "aurelia-loader": "npm:aurelia-loader@1.0.0",
+      "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
+      "aurelia-pal": "npm:aurelia-pal@1.3.0",
+      "aurelia-path": "npm:aurelia-path@1.1.1"
+    },
     "npm:aurelia-loader@1.0.0": {
       "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
       "aurelia-path": "npm:aurelia-path@1.1.1"
@@ -183,6 +192,10 @@ System.config({
       "aurelia-logging": "npm:aurelia-logging@1.3.1",
       "aurelia-path": "npm:aurelia-path@1.1.1",
       "aurelia-route-recognizer": "npm:aurelia-route-recognizer@1.1.0"
+    },
+    "npm:aurelia-systemjs-hot-plugin@1.0.1": {
+      "aurelia-hot-module-reload": "npm:aurelia-hot-module-reload@0.1.0",
+      "aurelia-loader-systemjs": "npm:aurelia-loader-systemjs@1.0.4"
     },
     "npm:aurelia-task-queue@1.2.0": {
       "aurelia-pal": "npm:aurelia-pal@1.3.0"
@@ -344,6 +357,9 @@ System.config({
       "debug": "npm:debug@2.6.8",
       "has-binary2": "npm:has-binary2@1.0.2",
       "isarray": "npm:isarray@2.0.1"
+    },
+    "npm:systemjs-hot-reloader-example@1.1.3": {
+      "systemjs-hmr": "npm:systemjs-hmr@2.0.9"
     },
     "npm:systemjs-hot-reloader@1.1.0": {
       "systemjs-hmr": "npm:systemjs-hmr@2.0.9"

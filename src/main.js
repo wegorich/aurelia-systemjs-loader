@@ -11,6 +11,10 @@ export function configure(aurelia) {
         .eventAggregator()
         .developmentLogging()
 
+     aurelia.use.globalResources([
+        'components/component.js'
+     ]);
+
     aurelia.start()
         .then(a => {
             a.setRoot(api.auth.getToken() ? 'app' : 'auth');

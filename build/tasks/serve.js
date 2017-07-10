@@ -1,30 +1,39 @@
 import gulp from 'gulp';
-import paths from '../paths';
 import browserSync from 'browser-sync';
 import chokidarEvEmitter from 'chokidar-socket-emitter';
 
-gulp.task('serve', ['build'], function() {
-    var bs = browserSync.create();
+gulp.task('serve', ['build'], () => {
+  const url = require('url');
+  const proxy = require('proxy-middleware');
+  const proxyUrl = process.env.URL || '';
+  const proxyOptions = url.parse(proxyUrl);
 
-    bs.watch([
-        'index.html',
-        'config.js',
-        './src/aurelia-loader-system.js',
-        './src/text-template-loader.js',
-        './src/aurelia-loader-custom.js',
-        'jspm.config.js'
-    ]).on('change', bs.reload);
+  proxyOptions.route = '/api';
 
-    bs.init({
-        server: '.',
-        port: 9000,
-        logPrefix: 'TEST',
-        online: false,
-        open: false,
-        reloadOnRestart: true
-    }, function(){
-        chokidarEvEmitter();
-    });
-
-    
+  browserSync({
+    browser: 'chrome',
+    notify: false,
+    port: 9000,
+    logPrefix: 'DSP',
+    online: false,
+    open: false,
+    reloadOnRestart: true,
+    injectChanges: true,
+    snippetOptions: {
+      rule: {
+        match: '<span id="browser-sync-binding"></span>',
+        fn(snippet) {
+          return snippet;
+        }
+      }
+    },
+    server: {
+      baseDir: ['.'],
+      middleware: [
+        proxy(proxyOptions)
+      ]
+    }
+  }, function() {
+      chokidarEvEmitter({ quiet: true })
+  });
 });

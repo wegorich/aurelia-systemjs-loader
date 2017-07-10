@@ -23,6 +23,7 @@ function reportChange(event) {
 // serve task, it will instantiate a browserSync session
 gulp.task('watch', ['serve'], function () {
     gulp.watch(paths.source, ['build-js']).on('change', reportChange);
-    gulp.watch(paths.sass, ['sass:app:stream']).on('change', reportChange);
+    gulp.watch(paths.sassApp, ['sass:app:stream']);
+    gulp.watch(paths.sassVendor, ['sass:vendor:stream']);
     gulp.watch(paths.html, ['build-html']).on('change', reportChange);
 });
